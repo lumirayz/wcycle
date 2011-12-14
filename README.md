@@ -5,6 +5,7 @@ A little script that assigns a randomly selected wallpaper from a directory ever
 Usage
 -----
 To cycle between all images in ~/wallpapers every minute (60 seconds):
+
 	./wcycle.py -p ~/wallpapers/ -d 60
 
 Notes
