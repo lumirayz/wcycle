@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+import subprocess
+import optparse
+import random
+import glob
+import time
+
+parser = optparse.OptionParser()
+parser.add_option("-p", "--path", type="string", dest = "path", help = "path to get images from")
+parser.add_option("-d", "--delay", type="int", dest = "delay", default = 600, help = "delay between image switches")
+
+history = set()
+
+options, args = parser.parse_args()
+
+while True:
+	time.sleep(options.delay)
+	fl = set(glob.glob(options.path + "*"))
+	available = fl - history
+	selected = random.choice(list(available))
+	history.add(selected)
+	if len(history) >= len(fl):
+		history.clear()
+		history.add(selected)
+	subprocess.Popen(["nitrogen", "--save", "--set-zoom-fill", selected], shell = False)
