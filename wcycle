@@ -22,4 +22,5 @@ while True:
 	if len(history) >= len(fl):
 		history.clear()
 		history.add(selected)
-	subprocess.Popen(["nitrogen", "--save", "--set-zoom-fill", selected], shell = False)
+	pr = subprocess.Popen(["nitrogen", "--save", "--set-zoom-fill", selected], shell = False)
+	pr.wait()
