@@ -8,14 +8,21 @@ import time
 parser = optparse.OptionParser()
 parser.add_option("-p", "--path", type="string", dest = "path", help = "path to get images from")
 parser.add_option("-d", "--delay", type="int", dest = "delay", default = 600, help = "delay between image switches")
+parser.add_option("-e", "--extensions", type="string", dest = "extensions", default = "png,jpg,jpeg,gif", help = "comma separated list of allowed extensions")
 
 history = set()
 
 options, args = parser.parse_args()
+extensions = options.extensions.lower().split(",")
+
+def getFileList():
+	fl = glob.glob(options.path + "*.*")
+	fl = filter(lambda f: f.rsplit(".", 1)[1].lower() in extensions, fl)
+	return set(fl)
 
 while True:
 	time.sleep(options.delay)
-	fl = set(glob.glob(options.path + "*"))
+	fl = getFileList()
 	available = fl - history
 	selected = random.choice(list(available))
 	history.add(selected)
