@@ -14,11 +14,13 @@ parser.add_option("-c", "--command", type="string", dest = "command", default = 
 history = set()
 
 options, args = parser.parse_args()
-extensions = options.extensions.lower().split(",")
+options.extensions = options.extensions.lower().split(",")
+if not options.path.endswith("/"):
+	options.path += "/"
 
 def getFileList():
 	fl = glob.glob(options.path + "*.*")
-	fl = filter(lambda f: f.rsplit(".", 1)[1].lower() in extensions, fl)
+	fl = filter(lambda f: f.rsplit(".", 1)[1].lower() in options.extensions, fl)
 	return set(fl)
 
 while True:
