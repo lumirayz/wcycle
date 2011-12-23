@@ -9,6 +9,7 @@ parser = optparse.OptionParser()
 parser.add_option("-p", "--path", type="string", dest = "path", help = "path to get images from")
 parser.add_option("-d", "--delay", type="int", dest = "delay", default = 600, help = "delay between image switches")
 parser.add_option("-e", "--extensions", type="string", dest = "extensions", default = "png,jpg,jpeg,gif", help = "comma separated list of allowed extensions")
+parser.add_option("-c", "--command", type="string", dest = "command", default = "nitrogen --set-zoom-fill %f", help = "command to execute on wallpaper change, replaces %f with the path to the wallpaper")
 
 history = set()
 
@@ -29,5 +30,5 @@ while True:
 	if len(history) >= len(fl):
 		history.clear()
 		history.add(selected)
-	pr = subprocess.Popen(["nitrogen", "--save", "--set-zoom-fill", selected], shell = False)
+	pr = subprocess.Popen(options.command.replace("%f", selected), shell = True)
 	pr.wait()
