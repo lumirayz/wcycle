@@ -18,19 +18,22 @@ options.extensions = options.extensions.lower().split(",")
 if not options.path.endswith("/"):
 	options.path += "/"
 
-def getFileList():
-	fl = glob.glob(options.path + "*.*")
+def getFileList(path):
+	fl = glob.glob(path + "*.*")
 	fl = filter(lambda f: f.rsplit(".", 1)[1].lower() in options.extensions, fl)
 	return set(fl)
 
+def changeWallpaper(image):
+	pr = subprocess.Popen(options.command.replace("%f", selected), shell = True)
+	pr.wait()
+
 while True:
 	time.sleep(options.delay)
-	fl = getFileList()
+	fl = getFileList(options.path)
 	available = fl - history
 	selected = random.choice(list(available))
 	history.add(selected)
 	if len(history) >= len(fl):
 		history.clear()
 		history.add(selected)
-	pr = subprocess.Popen(options.command.replace("%f", selected), shell = True)
-	pr.wait()
+	changeWallpaper(selected)
