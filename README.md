@@ -10,8 +10,8 @@ To cycle between all images in ~/wallpapers every minute (60 seconds):
 
 Notes
 -----
-* The first wallpaper change is not at program start, but after DELAY seconds.
-* This uses nitrogen with --set-zoom-fill by default, which may not be what you want. You can use the --command option to customize this.
+* The first wallpaper change is not at program start, but after DELAY seconds, you can toggle this with the `--instant` option.
+* This uses nitrogen with --set-zoom-fill by default, which may not be what you want. You can use the `--command` option to customize this.
 
 Compatibility
 -------------
@@ -21,7 +21,7 @@ Usage
 -----
 
 	Usage: wcycle [options]
-
+	
 	Options:
 	  -h, --help            show this help message and exit
 	  -p PATH, --path=PATH  path to get images from
@@ -32,6 +32,7 @@ Usage
 	  -c COMMAND, --command=COMMAND
 		                    command to execute on wallpaper change, replaces %f
 		                    with the path to the wallpaper
+	  -i, --instant         don't wait before first wallpaper change
 
 License
 -------

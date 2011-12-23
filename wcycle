@@ -10,6 +10,7 @@ parser.add_option("-p", "--path", type="string", dest = "path", help = "path to 
 parser.add_option("-d", "--delay", type="int", dest = "delay", default = 600, help = "delay between image switches")
 parser.add_option("-e", "--extensions", type="string", dest = "extensions", default = "png,jpg,jpeg,gif", help = "comma separated list of allowed extensions")
 parser.add_option("-c", "--command", type="string", dest = "command", default = "nitrogen --set-zoom-fill %f", help = "command to execute on wallpaper change, replaces %f with the path to the wallpaper")
+parser.add_option("-i", "--instant", action="store_true", dest = "instant", default = False, help = "don't wait before first wallpaper change")
 
 history = set()
 
@@ -27,8 +28,13 @@ def changeWallpaper(image):
 	pr = subprocess.Popen(options.command.replace("%f", selected), shell = True)
 	pr.wait()
 
+firstLoop = True
+
 while True:
-	time.sleep(options.delay)
+	if options.instant and firstLoop:
+		firstLoop = False
+	else:
+		time.sleep(options.delay)
 	fl = getFileList(options.path)
 	available = fl - history
 	selected = random.choice(list(available))
